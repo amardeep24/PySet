@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "module": "ES2015",
+        "esModuleInterop": true,
+        "target": "ES3",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "dist",
+        "lib": ["es6"],
+    }
+}
