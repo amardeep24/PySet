@@ -23,6 +23,9 @@ describe('PySet Operations with one set', () => {
         pyset.add("foo");
         const val = pyset.pop();
         expect(val).toEqual("foo");
+
+        pyset.clear();
+        expect(pyset.pop).toThrowError(TypeError);
     });
 });
 
@@ -106,12 +109,16 @@ describe('PySet Operations with two sets', () => {
     });
 
     test("testDifference", () => {
-        pysetOne.add("foo").add("bar");
+        pysetOne.add("foo").add("bar").add("baz");
         pysetTwo.add("bar");
 
         const resOne = pysetOne.difference(pysetTwo);
-        pysetThree.add("foo")
-        expect(resOne).toEqual(pysetThree);
+        expect([...resOne]).toEqual(["foo", "baz"]);
+
+        pysetThree.add("baz");
+        const resTwo = pysetOne.difference(pysetTwo, pysetThree);
+        expect([...resTwo]).toEqual(["foo"]);
+
     });
 
     test("testSymmetricDifference", () => {
@@ -119,43 +126,48 @@ describe('PySet Operations with two sets', () => {
         pysetTwo.add("bar").add("baz");
 
         const resOne = pysetOne.symmetricDifference(pysetTwo);
-        pysetThree.add("foo").add("baz");
-        expect(resOne).toEqual(pysetThree);
+        expect([...resOne]).toEqual(["foo", "baz"]);
     });
 
     test("testUpdate", () => {
         pysetOne.add("foo").add("bar");
         pysetTwo.add("baz");
 
-        const resOne = pysetOne.update(pysetTwo);
-        pysetThree.add("foo").add("bar").add("baz");
-        expect(resOne).toEqual(pysetThree);
+        pysetOne.update(pysetTwo);
+        expect([...pysetOne]).toEqual(["foo", "bar", "baz"]);
     });
 
     test("testIntersectionUpdate", () => {
         pysetOne.add("foo").add("bar");
         pysetTwo.add("bar");
 
-        const resOne = pysetOne.intersectionUpdate(pysetTwo);
-        pysetThree.add("bar");
-        expect(resOne).toEqual(pysetThree);
+        pysetOne.intersectionUpdate(pysetTwo);
+        expect([...pysetOne]).toEqual(["bar"]);
+
+        pysetThree.add("fuu").add("bar");
+        pysetFour.add("bar")
+        pysetFour.intersectionUpdate(pysetTwo, pysetThree);
+        expect([...pysetFour]).toEqual(["bar"]);
     });
 
     test("testDifferenceUpdate", () => {
         pysetOne.add("foo").add("bar").add("baz");
         pysetTwo.add("bar");
 
-        const resOne = pysetOne.differenceUpdate(pysetTwo);
-        pysetThree.add("baz").add("foo");;
-        expect(resOne).toEqual(pysetThree);
+        pysetOne.differenceUpdate(pysetTwo);
+        expect([...pysetOne]).toEqual(["foo", "baz"]);
+
+        pysetThree.add("fuu").add("bar");
+        pysetFour.add("bar")
+        pysetFour.differenceUpdate(pysetTwo, pysetThree);
+        expect([...pysetFour]).toEqual([]);
     });
 
     test("testSymmetricDifferenceUpdate", () => {
         pysetOne.add("foo").add("bar");
         pysetTwo.add("baz").add("bar");
 
-        const resOne = pysetOne.symmetricDifferenceUpdate(pysetTwo);
-        pysetThree.add("baz").add("foo");;
-        expect(resOne).toEqual(pysetThree);
+        pysetOne.symmetricDifferenceUpdate(pysetTwo);
+        expect([...pysetOne]).toEqual(["foo", "baz"]);
     });
 });
