@@ -1,8 +1,8 @@
 {
-  "name": "PySet",
-  "version": "1.0.0",
+  "name": "pyset",
+  "version": "1.0.3",
   "description": "A port of the set API of Python to JavaScript",
-  "main": "index.js",
+  "main": "src/pyset.ts",
   "scripts": {
     "test": "npx jest --runInBand --colors"
   },
@@ -11,6 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^26.0.19",
+    "@types/node": "^14.14.14",
     "jest": "^26.6.3",
     "ts-jest": "^26.4.4",
     "tslint": "^6.1.3",
